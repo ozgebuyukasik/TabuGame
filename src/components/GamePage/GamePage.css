@@ -2,3 +2,6 @@
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
 }
+.button-area{
+    display: flex;
+}
