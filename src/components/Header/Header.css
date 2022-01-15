@@ -1,0 +1,17 @@
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #457b9d;
+}
+.logo{
+    display: block;
+    height: auto;
+    width: auto;
+}
+.game-title{
+    font-family: 'Mochiy Pop P One', sans-serif;
+    font-size: 30px;
+    color: #e5e5e5;
+    margin-left: 1rem;
+}

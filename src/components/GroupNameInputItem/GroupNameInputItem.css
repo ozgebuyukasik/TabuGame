@@ -1,0 +1,13 @@
+.group-name-input-item-container{
+    width: 50%;
+    margin: auto;
+    height: 3rem;
+    padding: 1rem 0rem;
+}
+.group-name-input-item{
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #1d3557;
+    border-radius: 10px;
+}

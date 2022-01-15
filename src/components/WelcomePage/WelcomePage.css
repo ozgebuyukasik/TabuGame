@@ -1,0 +1,21 @@
+.welcome-page{
+    background-color: #e2ece9;
+    min-height: 90vh;
+}
+
+.welcome-title, .welcome-message, .group-names, .start-message{
+    text-align: center;
+    padding: 1rem 0rem;
+}
+
+.start-button{
+    width: 25%;
+    align-self: center;
+    height: auto;
+    background-color: #01497c;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #e5e5e5;
+    font-size: 24px;
+    padding: 1rem;
+}
