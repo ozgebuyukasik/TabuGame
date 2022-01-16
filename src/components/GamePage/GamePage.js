@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import Words from "../Words/Words";
 import GroupCard from "../GroupCard/GroupCard";
 import StyledButton from "../StyledComponents/StyledComponents";
 import Counter from "../Counter/Counter";
 import "./GamePage.css";
 
-function GamePage({ groupInfo }) {
+function GamePage({ groupInfo, winner }) {
   const [uniqueWordCount, setUniqueWordCount] = useState(1);
   const [scoreOfGroupOne, setScoreOfGroupOne] = useState(0);
   const [scoreOfGroupTwo, setScoreOfGroupTwo] = useState(0);
@@ -15,8 +17,14 @@ function GamePage({ groupInfo }) {
   const [isFirstGroupCurrent, setIsFirstGroupCurrent] = useState(true);
   const [countDown, setCountDown] = useState(10);
 
+  function showAlertMessage(){
+    confirmAlert({
+      title: "Confirm",
+      message: `${groupInfo.groupOne}: ${scoreOfGroupOne} vs. ${groupInfo.groupTwo} ${scoreOfGroupTwo}`
+    })
+  };
   function generateRandomNumber() {
-    console.log(uniqueWordCount)
+    console.log(uniqueWordCount);
     const randomNumber = Math.floor(Math.random() * uniqueWordCount);
     console.log(randomNumber);
     return randomNumber;
@@ -26,11 +34,25 @@ function GamePage({ groupInfo }) {
   }, [uniqueWordCount]);
 
   useEffect(() => {
-    if (countDown === "Time's up!") {
+    if (countDown === 0) {
       setIsFirstGroupCurrent(!isFirstGroupCurrent);
       setCountDown(10);
     }
   }, [countDown]);
+
+  useEffect(() => {
+    let unmounted = true;
+    if (unmounted && scoreOfGroupOne === 20) {
+      winner(groupInfo.groupOne);
+    }
+    if (unmounted && scoreOfGroupTwo === 20) {
+      winner(groupInfo.groupTwo);
+    }
+    return () => {
+      unmounted = false;
+      winner(null);
+    };
+  }, [scoreOfGroupOne, scoreOfGroupTwo]);
 
   function handleClick(e) {
     setSelectedWordIndex(generateRandomNumber());

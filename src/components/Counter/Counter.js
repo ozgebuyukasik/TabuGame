@@ -5,7 +5,7 @@ function Counter({seconds, setSeconds}) {
     if(seconds > 0){
       setTimeout(()=> setSeconds(seconds - 1), 1000)
     } else{
-      setSeconds("Time's up!")
+      setSeconds(0)
     }
   }, [seconds])
   return <div className="counter">{seconds}</div>;
