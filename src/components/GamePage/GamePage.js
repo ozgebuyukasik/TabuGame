@@ -8,32 +8,32 @@ import Counter from "../Counter/Counter";
 import "./GamePage.css";
 
 function GamePage({ groupInfo, winner }) {
-  const COUNT = 60;
-  const [uniqueWordCount, setUniqueWordCount] = useState(1);
+  const TIME = 60;
+  const [uniqueWordCount, setUniqueWordCount] = useState();
   const [scoreOfGroupOne, setScoreOfGroupOne] = useState(0);
   const [scoreOfGroupTwo, setScoreOfGroupTwo] = useState(0);
   const [selectedWordIndex, setSelectedWordIndex] = useState(
     Math.floor(Math.random() * uniqueWordCount)
   );
-  const [isFirstGroupCurrent, setIsFirstGroupCurrent] = useState(true);
-  const [countDown, setCountDown] = useState(COUNT);
+  const [isFirstGroup, setIsFirstGroup] = useState(true);
+  const [countDown, setCountDown] = useState(TIME);
 
   function showCountDownMessage() {
     confirmAlert({
       title: `${
-        isFirstGroupCurrent ? groupInfo.groupTwo : groupInfo.groupOne
+        isFirstGroup ? groupInfo.groupTwo : groupInfo.groupOne
       }' s Turn!`,
       message: `${groupInfo.groupOne}: ${scoreOfGroupOne} vs. ${groupInfo.groupTwo}: ${scoreOfGroupTwo}`,
       buttons: [
         {
           label: "Continue",
-          onClick: () => setCountDown(COUNT),
+          onClick: () => setCountDown(TIME),
         },
       ],
       closeOnClickOutside: false,
     });
   }
-  
+
   function generateRandomNumber() {
     const randomNumber = Math.floor(Math.random() * uniqueWordCount);
     return randomNumber;
@@ -52,7 +52,7 @@ function GamePage({ groupInfo, winner }) {
     let unmounted = true;
     if (unmounted && countDown === 0) {
       setUniqueWordCount(uniqueWordCount - 1);
-      setIsFirstGroupCurrent(!isFirstGroupCurrent);
+      setIsFirstGroup(!isFirstGroup);
       showCountDownMessage();
     }
     return () => {
@@ -76,7 +76,7 @@ function GamePage({ groupInfo, winner }) {
 
   function handleClick(e) {
     setUniqueWordCount(uniqueWordCount - 1);
-    if (isFirstGroupCurrent) {
+    if (isFirstGroup) {
       setScoreOfGroupOne((prevScore) => prevScore + parseInt(e.target.value));
     } else {
       setScoreOfGroupTwo((prevScore) => prevScore + parseInt(e.target.value));
