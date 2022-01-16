@@ -9,7 +9,6 @@ function Words({ setUniqueWordCount, selectedWord }) {
   useEffect(() => {
     const keys = Object.keys(words);
     setWordArray({ ...wordArray, array: keys });
-    console.log(wordArray);
   }, []);
 
   useEffect(() => {
@@ -17,13 +16,8 @@ function Words({ setUniqueWordCount, selectedWord }) {
   }, [wordArray.array]);
 
   useEffect(() => {
-    console.log(
-      wordArray.array[selectedWord],
-      words[wordArray.array[selectedWord]]
-    );
-    wordArray.array.splice(selectedWord, 1);
-    console.log(wordArray);
     setCurrentWord(words[wordArray.array[selectedWord]])
+    wordArray.array.splice(selectedWord, 1);
   }, [selectedWord]);
 
   return (

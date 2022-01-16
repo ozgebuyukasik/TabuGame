@@ -8,6 +8,7 @@ import Counter from "../Counter/Counter";
 import "./GamePage.css";
 
 function GamePage({ groupInfo, winner }) {
+  const COUNT = 60;
   const [uniqueWordCount, setUniqueWordCount] = useState(1);
   const [scoreOfGroupOne, setScoreOfGroupOne] = useState(0);
   const [scoreOfGroupTwo, setScoreOfGroupTwo] = useState(0);
@@ -15,29 +16,48 @@ function GamePage({ groupInfo, winner }) {
     Math.floor(Math.random() * uniqueWordCount)
   );
   const [isFirstGroupCurrent, setIsFirstGroupCurrent] = useState(true);
-  const [countDown, setCountDown] = useState(10);
+  const [countDown, setCountDown] = useState(COUNT);
 
-  function showAlertMessage(){
+  function showCountDownMessage() {
     confirmAlert({
-      title: "Confirm",
-      message: `${groupInfo.groupOne}: ${scoreOfGroupOne} vs. ${groupInfo.groupTwo} ${scoreOfGroupTwo}`
-    })
-  };
+      title: `${
+        isFirstGroupCurrent ? groupInfo.groupTwo : groupInfo.groupOne
+      }' s Turn!`,
+      message: `${groupInfo.groupOne}: ${scoreOfGroupOne} vs. ${groupInfo.groupTwo}: ${scoreOfGroupTwo}`,
+      buttons: [
+        {
+          label: "Continue",
+          onClick: () => setCountDown(COUNT),
+        },
+      ],
+      closeOnClickOutside: false,
+    });
+  }
+  
   function generateRandomNumber() {
-    console.log(uniqueWordCount);
     const randomNumber = Math.floor(Math.random() * uniqueWordCount);
-    console.log(randomNumber);
     return randomNumber;
   }
   useEffect(() => {
-    setSelectedWordIndex(generateRandomNumber());
+    let unmounted = true;
+    if (unmounted) {
+      setSelectedWordIndex(generateRandomNumber());
+    }
+    return () => {
+      unmounted = false;
+    };
   }, [uniqueWordCount]);
 
   useEffect(() => {
-    if (countDown === 0) {
+    let unmounted = true;
+    if (unmounted && countDown === 0) {
+      setUniqueWordCount(uniqueWordCount - 1);
       setIsFirstGroupCurrent(!isFirstGroupCurrent);
-      setCountDown(10);
+      showCountDownMessage();
     }
+    return () => {
+      unmounted = false;
+    };
   }, [countDown]);
 
   useEffect(() => {
@@ -55,7 +75,7 @@ function GamePage({ groupInfo, winner }) {
   }, [scoreOfGroupOne, scoreOfGroupTwo]);
 
   function handleClick(e) {
-    setSelectedWordIndex(generateRandomNumber());
+    setUniqueWordCount(uniqueWordCount - 1);
     if (isFirstGroupCurrent) {
       setScoreOfGroupOne((prevScore) => prevScore + parseInt(e.target.value));
     } else {
