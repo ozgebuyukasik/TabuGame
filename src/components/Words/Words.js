@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import words from "../../assets/files/words.json";
+import "./Words.css";
 
 function Words({ setUniqueWordCount, selectedWord }) {
   const [wordArray, setWordArray] = useState({ array: [] });
+  const [currentWord, setCurrentWord] = useState();
 
   useEffect(() => {
     const keys = Object.keys(words);
@@ -12,7 +14,7 @@ function Words({ setUniqueWordCount, selectedWord }) {
 
   useEffect(() => {
     setUniqueWordCount(wordArray.array.length);
-  }, [wordArray]);
+  }, [wordArray.array]);
 
   useEffect(() => {
     console.log(
@@ -21,14 +23,18 @@ function Words({ setUniqueWordCount, selectedWord }) {
     );
     wordArray.array.splice(selectedWord, 1);
     console.log(wordArray);
+    setCurrentWord(words[wordArray.array[selectedWord]])
   }, [selectedWord]);
 
   return (
     <div className="word-container">
       <p className="word-value">{wordArray.array[selectedWord]}</p>
-      {words[wordArray.array[selectedWord]] && words[wordArray.array[selectedWord]].map((forbidden) => (
-        <p key={forbidden} className="forbidden-word">{forbidden}</p>
-      ))}
+      {currentWord !== undefined &&
+        currentWord.map((forbidden) => (
+          <p key={`${currentWord} ${forbidden}`} className="forbidden-word">
+            {forbidden}
+          </p>
+        ))}
     </div>
   );
 }

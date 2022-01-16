@@ -1,7 +1,19 @@
 .game-container{
     display: grid;
+    align-items: center;
+    width: 100%;
+    min-height: 90vh;
     grid-template-columns: 1fr 3fr 1fr;
 }
 .button-area{
+    width: 100%;
     display: flex;
+}
+.playground{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
 }

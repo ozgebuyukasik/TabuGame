@@ -1,0 +1,24 @@
+.word-container {
+  width: 90%;
+  height: fit-content;
+  margin: auto;
+}
+.word-value {
+  padding: 1rem;
+  background-color: #588157;
+  font-size: 28px;
+  font-weight: 600;
+  color: #e8e8e4;
+  text-align: center;
+  cursor: default;
+}
+.forbidden-word {
+  background-color: #d90429;
+  font-weight: 600;
+  padding: 1rem;
+  border: 1px solid;
+  font-size: 28px;
+  color: #e8e8e4;
+  text-align: center;
+  cursor: default;
+}

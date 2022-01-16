@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function GroupCard({ groupName, updateScore }) {
-  const [groupScore, setGroupScore] = useState(0);
+function GroupCard({ groupName, score }) {
+
   return (
     <div className="gorup-container">
       <h5 className="group-name">{groupName}</h5>
-      <p className="group-score">{groupScore}</p>
+      <p className="group-score">{score}</p>
     </div>
   );
 }
